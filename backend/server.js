@@ -23,10 +23,6 @@ mongoose
   .then(() => console.log("db connected"))
   .catch((err) => console.log(err));
 
-app.get("/", (req, res) => {
-  res.send("server is ready");
-});
-
 // app.get("/api/products", (req, res) => {
 //   res.send(data.products);
 // });
