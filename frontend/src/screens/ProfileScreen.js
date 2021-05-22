@@ -35,7 +35,7 @@ const ProfileScreen = () => {
   }, [userDetails]);
 
   useEffect(() => {
-    console.log(userInfo);
+    // console.log(userInfo);
     if (userInfo._id) {
       dispatch(userActions.getUserDetails(userInfo._id));
     }
@@ -69,7 +69,7 @@ const ProfileScreen = () => {
           Authorization: `Bearer ${userInfo.token}`,
         },
       });
-      console.log(data);
+      // console.log(data);
       setLoadingUpload(false);
       setSellerLogo(data);
     } catch (error) {

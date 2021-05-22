@@ -262,7 +262,7 @@ function App({ props }) {
               exact
               component={ProductListScreen}
             />
-            <AdminRoute
+            <SellerRoute
               path="/create-product"
               component={CreateProductScreen}
             />

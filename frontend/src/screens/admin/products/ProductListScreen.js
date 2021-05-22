@@ -11,7 +11,7 @@ const ProductListScreen = () => {
   const history = useHistory();
   const location = useLocation();
 
-  const { pagenumber = 1 } = useParams();
+  const { pageNumber = 1 } = useParams();
 
   const { productLoading, products, pages, page, errorText } = useSelector(
     (state) => state.product
@@ -22,12 +22,15 @@ const ProductListScreen = () => {
   const [deletedMsg, setDeletedMsg] = useState("");
 
   useEffect(() => {
+    console.log(location.pathname.includes("seller"), pageNumber);
     if (location.pathname.includes("seller")) {
-      dispatch(productActions.listProducts({ sellerId: userInfo._id }));
+      dispatch(
+        productActions.listProducts(pageNumber, { sellerId: userInfo._id })
+      );
     } else {
-      dispatch(productActions.listProducts(pagenumber));
+      dispatch(productActions.listProducts(pageNumber));
     }
-  }, [pagenumber]);
+  }, [pageNumber]);
 
   const deleteHandler = async (productId) => {
     if (window.confirm("Are you sure to delete ?")) {

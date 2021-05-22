@@ -21,7 +21,7 @@ const listProducts =
     order = "newest"
   ) =>
   async (dispatch, getState) => {
-    console.log(min, max);
+    console.log(pageNumber);
     const userInfo = getState().user.userInfo;
     dispatch({
       type: PRODUCT_LIST_REQUEST,
