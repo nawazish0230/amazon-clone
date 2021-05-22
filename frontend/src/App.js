@@ -33,6 +33,7 @@ import SearchBox from "./components/SearchBox";
 import SearchScreen from "./screens/SearchScreen";
 import CategoryListScreen from "./screens/admin/category/CategoryListScreen";
 import CreateCategoryScreen from "./screens/admin/category/CreateCategoryScreen";
+import EditCategoryScreen from "./screens/admin/category/EditCategoryScreen";
 import { useEffect, useState } from "react";
 import { categoryActions } from "./actions/categoryActions";
 import LoadingBox from "./components/LoadingBox";
@@ -273,6 +274,10 @@ function App({ props }) {
             <AdminRoute
               path="/create-category"
               component={CreateCategoryScreen}
+            />
+            <AdminRoute
+              path="/edit-category/:id"
+              component={EditCategoryScreen}
             />
             <AdminRoute path="/orders-list" exact component={OrderListScreen} />
             <AdminRoute path="/users-list" component={UserListScreen} />

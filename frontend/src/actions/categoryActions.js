@@ -5,7 +5,7 @@ import {
 } from "../constants/categoryConstant";
 import Axios from "axios";
 
-// get all categorys
+// get all categories
 const listCategories = () => async (dispatch) => {
   dispatch({
     type: CATEGORY_LIST_REQUEST,
@@ -55,12 +55,12 @@ const createCategory = (name, description) => async (a, getState) => {
 };
 
 // update category
-const updateProduct = (categoryId, categoryObj) => async (a, getState) => {
+const updateCategory = (categoryId, categoryObj) => async (a, getState) => {
   const userInfo = getState().user.userInfo;
   console.log(categoryId, categoryObj);
   try {
     const { data } = await Axios.put(
-      `/api/categorys/update/${categoryId}`,
+      `/api/categories/update/${categoryId}`,
       {
         ...categoryObj,
       },
@@ -83,7 +83,28 @@ const updateProduct = (categoryId, categoryObj) => async (a, getState) => {
 const deleteProduct = (categoryId) => async (a, getState) => {
   const userInfo = getState().user.userInfo;
   try {
-    const { data } = await Axios.delete(`/api/categorys/delete/${categoryId}`, {
+    const { data } = await Axios.delete(
+      `/api/categories/delete/${categoryId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
+    return data;
+  } catch (error) {
+    console.log(error.response);
+    return error.response && error.response.data.message
+      ? error.response.data
+      : error.message;
+  }
+};
+
+// get category by Id
+const getCategoryById = (categoryId) => async (a, getState) => {
+  const userInfo = getState().user.userInfo;
+  try {
+    const { data } = await Axios.get(`/api/categories/${categoryId}`, {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -100,6 +121,7 @@ const deleteProduct = (categoryId) => async (a, getState) => {
 export const categoryActions = {
   listCategories,
   createCategory,
-  updateProduct,
+  updateCategory,
   deleteProduct,
+  getCategoryById,
 };

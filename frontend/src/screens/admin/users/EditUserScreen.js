@@ -31,7 +31,7 @@ const EditUserScreen = ({ match }) => {
     setEmail(userDetails.email);
     setBlocked(userDetails.isBlocked);
     setSeller(userDetails.isSeller);
-  }, []);
+  }, [dispatch]);
 
   const submitHandler = async (e) => {
     // console.log(
