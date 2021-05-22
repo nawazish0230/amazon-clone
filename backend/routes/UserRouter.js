@@ -60,6 +60,7 @@ userRouter.post(
     let registerUser = await user.save();
 
     res.send({
+      _id: registerUser._id,
       email: registerUser.email,
       name: registerUser.name,
       isAdmin: registerUser.isAdmin,
@@ -207,6 +208,7 @@ userRouter.get(
   "/top-sellers",
   expressAsyncHandler(async (req, res) => {
     const topSellers = await User.find({ isSeller: true })
+      .select("seller")
       .sort({ "seller.rating": -1 })
       .limit(3);
     res.send(topSellers);

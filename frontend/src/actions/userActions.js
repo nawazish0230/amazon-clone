@@ -12,6 +12,8 @@ import {
   USER_LIST_REQUEST,
   USER_LIST_SUCCESS,
   USER_LIST_FAIL,
+  TOP_SELLER_LIST_REQUEST,
+  TOP_SELLER_LIST_SUCCESS,
 } from "../constants/userConstant";
 
 // register user
@@ -205,6 +207,31 @@ const updateUser = (userId, userObj) => async (a, getState) => {
   }
 };
 
+// list all user
+const getTopSellers = () => async (dispatch) => {
+  dispatch({
+    type: TOP_SELLER_LIST_REQUEST,
+    payload: true,
+  });
+  try {
+    const { data } = await axios.get("/api/users/top-sellers");
+    dispatch({
+      type: TOP_SELLER_LIST_SUCCESS,
+      payload: data,
+    });
+    dispatch({
+      type: TOP_SELLER_LIST_REQUEST,
+      payload: false,
+    });
+  } catch (error) {
+    dispatch({
+      type: TOP_SELLER_LIST_REQUEST,
+      payload: false,
+    });
+    return error.message;
+  }
+};
+
 export const userActions = {
   register,
   signIn,
@@ -214,4 +241,5 @@ export const userActions = {
   listUsers,
   blockUnBlockUser,
   updateUser,
+  getTopSellers,
 };

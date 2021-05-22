@@ -219,8 +219,9 @@ img.medium {
   max-width: 29rem;
   width: 100%;
 }
-img.large {
-  width: 100%;
+.product-img {
+  width: 400px;
+  height: 500px;
 }
 
 /* Card */

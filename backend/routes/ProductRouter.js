@@ -13,7 +13,7 @@ productRouter.get(
     const name = req.query.name || "";
     const seller = req.query.sellerId || "";
     const category = req.query.category || "";
-    const pageSize = 3;
+    const pageSize = 5;
     const page = Number(req.query.pageNumber) || 1;
 
     const min =
@@ -106,7 +106,7 @@ productRouter.post(
       res.status(404).send({ message: "Product already exists" });
       return;
     }
-
+    // console.log(req.body);
     const product = new Product({
       name,
       seller: req.user._id,

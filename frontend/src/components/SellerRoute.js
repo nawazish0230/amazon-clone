@@ -12,7 +12,7 @@ const SellerRoute = ({ component: Component, ...rest }) => {
         userInfo && userInfo.isSeller ? (
           <Component {...props}></Component>
         ) : (
-          <Redirect to="signin" />
+          <Redirect to="/signin" />
         )
       }
     ></Route>

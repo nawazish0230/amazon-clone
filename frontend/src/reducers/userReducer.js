@@ -1,4 +1,6 @@
 import {
+  TOP_SELLER_LIST_REQUEST,
+  TOP_SELLER_LIST_SUCCESS,
   USER_AUTH_FAIL,
   USER_AUTH_REQUEST,
   USER_AUTH_SUCCESS,
@@ -27,6 +29,8 @@ const initialState = {
   users: [],
   usersLoading: false,
   usersError: "",
+  topSellerLoading: false,
+  topSellers: [],
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -96,6 +100,16 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         usersError: action.payload,
+      };
+    case TOP_SELLER_LIST_REQUEST:
+      return {
+        ...state,
+        topSellerLoading: action.payload,
+      };
+    case TOP_SELLER_LIST_SUCCESS:
+      return {
+        ...state,
+        topSellers: action.payload,
       };
     default:
       return state;

@@ -65,10 +65,16 @@ const ProductScreen = ({ match, history }) => {
         <MessageBox variant="danger">{errorText}</MessageBox>
       ) : (
         <div className="p-1">
-          <Link to="/">Go Back</Link>
+          <Link to="/">
+            <i className="fa fa-arrow-left" aria-hidden="true"></i> Go Back
+          </Link>
           <div className="row top">
-            <div className="col-2">
-              <img className="large" src={product.image} alt={product.name} />
+            <div className="col-2 text-center">
+              <img
+                className="product-img"
+                src={product.image}
+                alt={product.name}
+              />
             </div>
             <div className="col-1">
               <ul>

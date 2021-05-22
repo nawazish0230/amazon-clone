@@ -93,7 +93,8 @@ function App({ props }) {
               {userInfo && Object.keys(userInfo).length > 0 ? (
                 <div className="dropdown">
                   <Link to="#">
-                    {userInfo.name} <i className="fa fa-caret-down"></i>
+                    {userInfo.name || "User"}{" "}
+                    <i className="fa fa-caret-down"></i>
                   </Link>
                   <ul className="dropdown-content">
                     <li>

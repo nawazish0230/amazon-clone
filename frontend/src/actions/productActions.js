@@ -108,36 +108,23 @@ const detailsProduct = (id) => async (dispatch) => {
   }
 };
 
-const createProduct =
-  (name, category, brand, countInStock, price, description) =>
-  async (a, getState) => {
-    const userInfo = getState().user.userInfo;
-    try {
-      const { data } = await Axios.post(
-        `/api/products/create`,
-        {
-          name,
-          category,
-          brand,
-          countInStock,
-          price,
-          description,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${userInfo.token}`,
-          },
-        }
-      );
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.log(error.response);
-      return error.response && error.response.data.message
-        ? error.response.data
-        : error.message;
-    }
-  };
+const createProduct = (createData) => async (a, getState) => {
+  const userInfo = getState().user.userInfo;
+  try {
+    const { data } = await Axios.post(`/api/products/create`, createData, {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error.response);
+    return error.response && error.response.data.message
+      ? error.response.data
+      : error.message;
+  }
+};
 
 // update product
 const updateProduct = (productId, productObj) => async (a, getState) => {

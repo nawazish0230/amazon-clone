@@ -4,9 +4,12 @@ import { categoryActions } from "../../../actions/categoryActions";
 import { productActions } from "../../../actions/productActions";
 import LoadingBox from "../../../components/LoadingBox";
 import MessageBox from "../../../components/MessageBox";
+import axios from "axios";
 
 const CreateProductScreen = () => {
   const dispatch = useDispatch();
+
+  const { userInfo } = useSelector((state) => state.user);
 
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
@@ -17,6 +20,9 @@ const CreateProductScreen = () => {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+  const [image, setImage] = useState("");
+  const [loadingUpload, setLoadingUpload] = useState("");
+  const [errorUpload, setErrorUpload] = useState("");
 
   const { categories } = useSelector((state) => state.category);
 
@@ -28,16 +34,17 @@ const CreateProductScreen = () => {
     setLoading(true);
     e.preventDefault();
     let resp = await dispatch(
-      productActions.createProduct(
+      productActions.createProduct({
         name,
+        image,
         category,
         brand,
         countInStock,
         price,
-        description
-      )
+        description,
+      })
     );
-    console.log(resp);
+    // console.log(resp);
     if (resp && resp.statusCode === 200) {
       setSuccessMsg("Product created Successfully");
       setErrorMsg("");
@@ -55,9 +62,31 @@ const CreateProductScreen = () => {
     setCountInStock("");
     setPrice("");
     setDescription("");
+    setImage("");
     setTimeout(() => {
       setSuccessMsg("");
     }, 3000);
+  };
+
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const bodyFormData = new FormData();
+    bodyFormData.append("image", file);
+    setLoadingUpload(true);
+    try {
+      let { data } = await axios.post("/api/uploads/s3", bodyFormData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      });
+      console.log(data);
+      setLoadingUpload(false);
+      setImage(data);
+    } catch (error) {
+      setErrorUpload(error.message);
+      setLoadingUpload(false);
+    }
   };
 
   return (
@@ -83,6 +112,30 @@ const CreateProductScreen = () => {
             onChange={(e) => setName(e.target.value)}
             required
           />
+        </div>
+        <div>
+          <label htmlFor="image">Image</label>
+          <input
+            id="image"
+            type="text"
+            placeholder="Enter Image"
+            disabled
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="imageFile">Image File</label>
+          <input
+            id="imageFile"
+            type="file"
+            placeholder="Choose Image"
+            onChange={uploadFileHandler}
+          />
+          {loadingUpload && <LoadingBox></LoadingBox>}
+          {errorUpload && (
+            <MessageBox variant="danger">{errorUpload}</MessageBox>
+          )}
         </div>
         <div>
           <label htmlFor="password">Category</label>
