@@ -21,7 +21,7 @@ const listProducts =
     order = "newest"
   ) =>
   async (dispatch, getState) => {
-    console.log(pageNumber);
+    console.log(categoryObj);
     const userInfo = getState().user.userInfo;
     dispatch({
       type: PRODUCT_LIST_REQUEST,
@@ -63,6 +63,7 @@ const listProducts =
           },
         }
       );
+      console.log(data);
       dispatch({
         type: PRODUCT_LIST_SUCCESS,
         payload: data,

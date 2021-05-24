@@ -40,6 +40,7 @@ import LoadingBox from "./components/LoadingBox";
 import MessageBox from "./components/MessageBox";
 import MapScreen from "./screens/MapScreen";
 import DashboardScreen from "./screens/admin/DashboardScreen";
+import CategoryProductScreen from "./screens/CategoryProductScreen";
 
 function App({ props }) {
   const dispatch = useDispatch();
@@ -240,6 +241,11 @@ function App({ props }) {
               path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order/page-number/:pagenumber"
               exact
               component={SearchScreen}
+            />
+            <Route
+              path="/category/:id"
+              exact
+              component={CategoryProductScreen}
             />
             <PrivateRoute path="/profile" component={ProfileScreen} />
             <PrivateRoute path="/map" component={MapScreen} />

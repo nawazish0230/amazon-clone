@@ -59,6 +59,7 @@ const CategoryListScreen = () => {
             <tr>
               <td>ID</td>
               <td>NAME</td>
+              <td>IMAGE</td>
               <td>DESCRIPTION</td>
               <td>ACTIONS</td>
             </tr>
@@ -69,6 +70,9 @@ const CategoryListScreen = () => {
                 <tr key={category._id}>
                   <td>{category._id}</td>
                   <td>{category.name}</td>
+                  <td>
+                    <img src={category.image} alt="" width="80" height="80" />
+                  </td>
                   <td>{category.description}</td>
                   <td>
                     <button

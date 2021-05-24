@@ -49,7 +49,12 @@ uploadRouter.post(
   isAuth,
   uploadS3.single("image"),
   expressAsyncHandler((req, res) => {
-    res.send(req.file.location);
+    res.send({
+      statusCode: 200,
+      result: {
+        imageUrl: req.file.location,
+      },
+    });
   })
 );
 

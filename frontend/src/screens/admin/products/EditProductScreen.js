@@ -142,6 +142,7 @@ const EditProductScreen = ({ match }) => {
             id="image"
             type="text"
             placeholder="Enter Image"
+            disabled
             value={image}
             onChange={(e) => setImage(e.target.value)}
           />
@@ -169,7 +170,7 @@ const EditProductScreen = ({ match }) => {
           >
             {categories &&
               categories.map((cat) => (
-                <option key={cat._id} value={cat.name}>
+                <option key={cat._id} value={cat._id}>
                   {cat.name}
                 </option>
               ))}

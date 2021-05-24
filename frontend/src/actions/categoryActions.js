@@ -3,7 +3,7 @@ import {
   CATEGORY_LIST_REQUEST,
   CATEGORY_LIST_SUCCESS,
 } from "../constants/categoryConstant";
-import Axios from "axios";
+import axios from "axios";
 
 // get all categories
 const listCategories = () => async (dispatch) => {
@@ -12,7 +12,7 @@ const listCategories = () => async (dispatch) => {
     payload: true,
   });
   try {
-    const { data } = await Axios.get(`/api/categories`);
+    const { data } = await axios.get(`/api/categories`);
     dispatch({
       type: CATEGORY_LIST_SUCCESS,
       payload: data,
@@ -32,7 +32,7 @@ const listCategories = () => async (dispatch) => {
 const createCategory = (name, description) => async (a, getState) => {
   const userInfo = getState().user.userInfo;
   try {
-    const { data } = await Axios.post(
+    const { data } = await axios.post(
       `/api/categories/create`,
       {
         name,
@@ -59,7 +59,7 @@ const updateCategory = (categoryId, categoryObj) => async (a, getState) => {
   const userInfo = getState().user.userInfo;
   console.log(categoryId, categoryObj);
   try {
-    const { data } = await Axios.put(
+    const { data } = await axios.put(
       `/api/categories/update/${categoryId}`,
       {
         ...categoryObj,
@@ -83,7 +83,7 @@ const updateCategory = (categoryId, categoryObj) => async (a, getState) => {
 const deleteProduct = (categoryId) => async (a, getState) => {
   const userInfo = getState().user.userInfo;
   try {
-    const { data } = await Axios.delete(
+    const { data } = await axios.delete(
       `/api/categories/delete/${categoryId}`,
       {
         headers: {
@@ -104,7 +104,7 @@ const deleteProduct = (categoryId) => async (a, getState) => {
 const getCategoryById = (categoryId) => async (a, getState) => {
   const userInfo = getState().user.userInfo;
   try {
-    const { data } = await Axios.get(`/api/categories/${categoryId}`, {
+    const { data } = await axios.get(`/api/categories/${categoryId}`, {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -118,10 +118,31 @@ const getCategoryById = (categoryId) => async (a, getState) => {
   }
 };
 
+const uploadImage = (fileData) => async (dispatch, getState) => {
+  console.log(fileData);
+  const userInfo = getState().user.userInfo;
+  const file = fileData;
+  const bodyFormData = new FormData();
+  bodyFormData.append("image", file);
+  try {
+    let { data } = await axios.post("/api/uploads/s3", bodyFormData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+    console.log(data);
+    return data;
+  } catch (error) {
+    return error.message;
+  }
+};
+
 export const categoryActions = {
   listCategories,
   createCategory,
   updateCategory,
   deleteProduct,
   getCategoryById,
+  uploadImage,
 };

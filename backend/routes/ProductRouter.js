@@ -40,6 +40,7 @@ productRouter.get(
         ? { rating: -1 }
         : { _id: 1 };
 
+    console.log(categoryFilter);
     const count = await Product.countDocuments({
       ...sellerFilter,
       ...nameFilter,
@@ -55,6 +56,7 @@ productRouter.get(
       ...ratingFilter,
     })
       .populate("seller")
+      .populate("category", "name image")
       .sort(sortOrder)
       .skip(pageSize * (page - 1))
       .limit(pageSize);
@@ -148,8 +150,10 @@ productRouter.put(
     const { name, category, price, countInStock, brand, description, image } =
       req.body;
 
-    let product = await Product.findById(productId);
-
+    let product = await (
+      await Product.findById(productId)
+    ).populate("category");
+    console.log(product);
     if (!product) {
       res.status(404).send({ message: "Product not found" });
       return;

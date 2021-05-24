@@ -2,40 +2,36 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { productActions } from "../actions/productActions";
-import { userActions } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import Product from "../components/Product";
-import Rating from "../components/Rating";
 import { useParams } from "react-router-dom";
 
-const SellerScreen = ({ match }) => {
-  let sellerId = match.params && match.params.id;
+const CategoryProductScreen = ({ match }) => {
+  let categoryId = match.params && match.params.id;
   const dispatch = useDispatch();
   const { pageNumber = 1 } = useParams();
 
-  const { userDetails, userDetailsLoading, userDetailsError } = useSelector(
-    (state) => state.user
-  );
   const { products, productLoading, errortext } = useSelector(
     (state) => state.product
   );
 
   useEffect(() => {
-    dispatch(userActions.getUserDetails(sellerId));
-    dispatch(productActions.listProducts(pageNumber, { sellerId: sellerId }));
-  }, [pageNumber, sellerId]);
+    dispatch(
+      productActions.listProducts(pageNumber, {}, {}, { category: categoryId })
+    );
+  }, [pageNumber, categoryId]);
 
   return (
     <div className="row top m-1">
       <div className="col-1">
-        {userDetailsLoading ? (
+        {productLoading ? (
           <LoadingBox></LoadingBox>
-        ) : userDetailsError ? (
-          <MessageBox>{userDetailsError}</MessageBox>
+        ) : errortext ? (
+          <MessageBox>{errortext}</MessageBox>
         ) : (
           <>
-            <ul className="card card-body">
+            {/* <ul className="card card-body">
               <li>
                 <div className="row start">
                   <div className="">
@@ -61,7 +57,7 @@ const SellerScreen = ({ match }) => {
                 <a href={`mailto:${userDetails.email}`}>Contact Seller</a>
               </li>
               <li>{userDetails.seller && userDetails.seller.description}</li>
-            </ul>
+            </ul> */}
           </>
         )}
       </div>
@@ -88,4 +84,4 @@ const SellerScreen = ({ match }) => {
   );
 };
 
-export default SellerScreen;
+export default CategoryProductScreen;

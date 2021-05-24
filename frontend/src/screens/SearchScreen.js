@@ -36,6 +36,7 @@ const SearchScreen = () => {
     dispatch(categoryActions.listCategories());
   }, []);
 
+  console.log(category);
   useEffect(() => {
     dispatch(
       productActions.listProducts(
@@ -111,9 +112,9 @@ const SearchScreen = () => {
                     categories.map((cat) => (
                       <li
                         key={cat._id}
-                        className={cat.name === category ? "active" : ""}
+                        className={cat._id === category ? "active" : ""}
                       >
-                        <Link to={getFilterUrl({ category: cat.name })}>
+                        <Link to={getFilterUrl({ category: cat._id })}>
                           {cat.name}
                         </Link>
                       </li>

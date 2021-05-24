@@ -20,7 +20,7 @@ categoryRouter.post(
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
-    const { name, description } = req.body;
+    const { name, image, description } = req.body;
 
     let existingProduct = await Category.findOne({ name: name });
     if (existingProduct) {
@@ -30,6 +30,7 @@ categoryRouter.post(
 
     const category = new Category({
       name,
+      image,
       description,
     });
 
@@ -40,6 +41,7 @@ categoryRouter.post(
       result: {
         _id: createdCategory._id,
         name: createdCategory.name,
+        image: createdCategory.image,
         description: createdCategory.description,
       },
     });
@@ -67,7 +69,7 @@ categoryRouter.put(
   isAdmin,
   expressAsyncHandler(async (req, res) => {
     let categoryId = req.params.id;
-    const { name, description } = req.body;
+    const { name, image, description } = req.body;
 
     let category = await Category.findById(categoryId);
 
@@ -77,6 +79,7 @@ categoryRouter.put(
     }
     if (category) {
       category.name = name ? name : category.name;
+      category.image = image ? image : category.image;
       category.description = description ? description : category.description;
     }
 
