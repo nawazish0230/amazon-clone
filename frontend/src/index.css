@@ -170,6 +170,12 @@ a.brand {
   margin-left: 1rem;
   margin-right: 1rem;
 }
+.humburgers {
+  display: none;
+}
+.list-container {
+  /* display: none; */
+}
 /* Aside */
 aside {
   position: fixed;
@@ -504,4 +510,31 @@ img.medium {
 }
 .support-users .unread {
   background-color: #f02020;
+}
+.block {
+  display: flex !important;
+}
+.none {
+  display: none !important;
+}
+
+@media screen and (max-width: 450px) {
+  .humburgers {
+    display: block;
+    margin-right: 1.1rem;
+  }
+  a.brand {
+    display: none;
+  }
+  .list-container {
+    display: flex;
+    flex-direction: column;
+    background: #203040;
+    width: 100%;
+    height: 12rem;
+    margin-bottom: 30%;
+  }
+  .dropdown {
+    margin: 1rem 0;
+  }
 }

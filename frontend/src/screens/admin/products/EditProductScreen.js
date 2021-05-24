@@ -100,7 +100,9 @@ const EditProductScreen = ({ match }) => {
       });
       console.log(data);
       setLoadingUpload(false);
-      setImage(data);
+      if (data.statusCode === 200) {
+        setImage(data.result.imageUrl);
+      }
     } catch (error) {
       setErrorUpload(error.message);
       setLoadingUpload(false);
