@@ -28,8 +28,8 @@ uploadRouter.post(
 );
 
 aws.config.update({
-  accessKeyId: "AKIATODRZHQ3G526Z4HX",
-  secretAccessKey: "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",
+  accessKeyId: "somcapitalthing",
+  secretAccessKey: "somejirish",
 });
 
 const s3 = new aws.S3();
